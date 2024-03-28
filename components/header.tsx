@@ -3,8 +3,9 @@
 import Link from "next/link";
 
 import { NavItemsData } from "@/data/nav-data";
+
 import NavMobile from "@/components/nav-mobile";
-import ButtonAuth from "@/components/button-auth";
+import ModalForm from "@/components/forms/modal-form";
 import { ModeToggle } from "@/components/mode-toggle";
 
 const Header = () => {
@@ -22,7 +23,7 @@ const Header = () => {
               {item.name}
             </Link>
           ))}
-          <ButtonAuth />
+          <ModalForm />
           <ModeToggle />
           <NavMobile />
         </div>
