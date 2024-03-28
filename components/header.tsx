@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { NavItemsData } from "@/data/nav-data";
 import NavMobile from "@/components/nav-mobile";
-import ButtonUser from "@/components/button-user";
+import ButtonAuth from "@/components/button-auth";
 import { ModeToggle } from "@/components/mode-toggle";
 
 const Header = () => {
@@ -22,9 +22,7 @@ const Header = () => {
               {item.name}
             </Link>
           ))}
-          <button className="inline-flex items-center justify-center whitespace-nowrap cursor-pointer bg-black text-white dark:text-black dark:bg-white py-1.5 px-3 rounded-md">
-            Get Started
-          </button>
+          <ButtonAuth />
           <ModeToggle />
           <NavMobile />
         </div>
