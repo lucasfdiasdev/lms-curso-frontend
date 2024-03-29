@@ -11,6 +11,7 @@ import { useLogOutQuery } from "@/redux/features/auth/authApi";
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 import ProfileInfo from "./profile-info";
+import ChangePassword from "./change-password";
 
 const ProfilePage = () => {
   const [active, setActive] = useState(1);
@@ -63,6 +64,7 @@ const ProfilePage = () => {
             />
           </div>
           {active === 1 && <ProfileInfo avatar={avatar || ""} user={user} />}
+          {active === 3 && <ChangePassword />}
         </div>
       </Protected>
     </div>

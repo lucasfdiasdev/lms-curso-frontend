@@ -7,8 +7,12 @@ import avatarIcon from "@/public/user.png";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { useUpdateAvatarMutation } from "@/redux/features/user/userApi";
+import {
+  useEditProfileMutation,
+  useUpdateAvatarMutation,
+} from "@/redux/features/user/userApi";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import toast from "react-hot-toast";
 
 interface IProfileInfo {
   user: any;
@@ -17,6 +21,8 @@ interface IProfileInfo {
 const ProfileInfo: React.FC<IProfileInfo> = ({ user, avatar }) => {
   const [name, setName] = useState<any>(user && user.name);
   const [updatedAvatar, { isSuccess, error }] = useUpdateAvatarMutation();
+  const [editProfile, { isSuccess: success, error: isError }] =
+    useEditProfileMutation();
   const [loadUser, setLoadUser] = useState<boolean>(false);
   const {} = useLoadUserQuery(undefined, { skip: loadUser ? false : true });
 
@@ -33,16 +39,25 @@ const ProfileInfo: React.FC<IProfileInfo> = ({ user, avatar }) => {
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess || success) {
       setLoadUser(true);
     }
-    if (error) {
+    if (error || isError) {
       console.log(error);
     }
-  }, [isSuccess, error]);
+
+    if (success) {
+      toast.success("Profile updated successfully");
+    }
+  }, [isSuccess, error, success, isError]);
 
   const handleSubmit = async (e: any) => {
-    console.log("submit");
+    e.preventDefault();
+    if (name !== "") {
+      await editProfile({
+        name: name,
+      });
+    }
   };
 
   return (
@@ -92,7 +107,9 @@ const ProfileInfo: React.FC<IProfileInfo> = ({ user, avatar }) => {
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
-              <Button className="w-[50%] mt-6">Update</Button>
+              <Button type="submit" className="w-[50%] mt-6">
+                Update
+              </Button>
             </div>
           </form>
         </div>

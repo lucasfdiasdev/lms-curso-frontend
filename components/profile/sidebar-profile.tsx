@@ -48,7 +48,7 @@ const SidebarProfile: React.FC<ISidebarProfile> = ({
           `w-full flex items-center px-3 py-4 cursor-pointer`,
           active === 2 ? "bg-slate-800" : "bg-transparent"
         )}
-        onClick={() => setActive(1)}
+        onClick={() => setActive(2)}
       >
         <SiCoursera />
         <h5 className="pl-2 md:block hidden text-muted-foreground dark:text-white">
@@ -60,7 +60,7 @@ const SidebarProfile: React.FC<ISidebarProfile> = ({
           `w-full flex items-center px-3 py-4 cursor-pointer`,
           active === 3 ? "bg-slate-800" : "bg-transparent"
         )}
-        onClick={() => setActive(1)}
+        onClick={() => setActive(3)}
       >
         <BsLockFill />
         <h5 className="pl-2 md:block hidden text-muted-foreground dark:text-white">
