@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { LuMenu } from "react-icons/lu";
 
+import { NavItemsData } from "@/data/nav-data";
+
 import {
   Sheet,
   SheetContent,
@@ -11,15 +13,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { NavItemsData } from "@/data/nav-data";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 const NavMobile = () => {
   return (
     <Sheet>
-      <SheetTrigger asChild className="md:hidden block">
-        <Button variant="ghost" size="icon">
-          <LuMenu className="h-[1rem] w-[1rem]" />
+      <SheetTrigger asChild>
+        <Button className="md:hidden" variant="ghost" size="icon">
+          <LuMenu size={20} />
         </Button>
       </SheetTrigger>
       <SheetContent>

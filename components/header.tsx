@@ -1,23 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 
 import { NavItemsData } from "@/data/nav-data";
+import {
+  useLogOutQuery,
+  useSocialAuthMutation,
+} from "@/redux/features/auth/authApi";
 
 import NavMobile from "@/components/nav-mobile";
 import ButtonUser from "@/components/button-user";
 import ModalForm from "@/components/forms/modal-form";
 import { ModeToggle } from "@/components/mode-toggle";
-import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
 
 const Header = () => {
   const { data } = useSession();
   const { user } = useSelector((state: any) => state.auth);
-  const [socialAuth, { isSuccess, isError, error }] = useSocialAuthMutation();
+  const [socialAuth] = useSocialAuthMutation();
+  const [logout, setLogout] = useState<boolean>(false);
+  const {} = useLogOutQuery(undefined, {
+    skip: !logout ? true : false,
+  });
 
   useEffect(() => {
     if (!user) {
@@ -30,10 +37,10 @@ const Header = () => {
       }
     }
 
-    if (isSuccess) {
-      toast.success("Login Successfully");
+    if (data === null) {
+      setLogout(true);
     }
-  }, [data, user]);
+  }, [data, user, socialAuth]);
 
   return (
     <header className="w-full border-b">
@@ -51,7 +58,7 @@ const Header = () => {
           ))}
           {user ? (
             <ButtonUser
-              src={user.avatar ? user.avatar : "./user.png"}
+              src={user.avatar ? user.avatar.url : "./user.png"}
               alt={user.name}
               name={user.email}
             />
