@@ -1,11 +1,13 @@
 "use client";
 
 import * as z from "zod";
-import { useState } from "react";
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { LoginSchema } from "@/lib/schemas";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
 
 import {
   Form,
@@ -20,7 +22,7 @@ import { Button } from "@/components/ui/button";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [login, { isSuccess, error, data }] = useLoginMutation();
   const formLogin = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -29,14 +31,32 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmitLogin: SubmitHandler<z.infer<typeof LoginSchema>> = () => {
+  const onSubmitLogin: SubmitHandler<z.infer<typeof LoginSchema>> = async (
+    data
+  ) => {
     setIsLoading(true);
 
     try {
+      await login(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Login Successfully");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData.data.message);
+        console.log(errorData.data.message);
+      }
+    }
+  }, [isSuccess, error]);
 
   return (
     <Form {...formLogin}>
@@ -55,7 +75,7 @@ const LoginForm = () => {
                   <Input
                     {...field}
                     disabled={isLoading}
-                    placeholder="john.doe@example.com"
+                    placeholder="email@exemplo.com"
                     type="email"
                   />
                 </FormControl>
@@ -68,7 +88,7 @@ const LoginForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Senha</FormLabel>
                 <FormControl>
                   <Input
                     {...field}

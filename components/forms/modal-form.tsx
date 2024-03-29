@@ -1,6 +1,10 @@
 "use client";
 
+import { signIn } from "next-auth/react";
 import { useCallback, useState } from "react";
+
+import { BsGithub, BsGoogle } from "react-icons/bs";
+
 import {
   Dialog,
   DialogTitle,
@@ -10,10 +14,9 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import LoginForm from "@/components/forms/login-form";
+import SocialForm from "@/components/forms/social-form";
 import RegisterForm from "@/components/forms/register-form";
 import VerificationForm from "@/components/forms/verification-form";
-import SocialForm from "./social-form";
-import { BsGithub, BsGoogle } from "react-icons/bs";
 
 type Variant = "REGISTER" | "LOGIN" | "VERIFICATION";
 
@@ -53,20 +56,12 @@ const ModalForm = () => {
               (variant === "REGISTER" && "Cadastrar nova conta") ||
               (variant === "VERIFICATION" && "Verification de email")}
           </DialogTitle>
-          <DialogDescription>
-            {(variant === "LOGIN" && (
-              <>
-                <p className="text-sm text-muted-foreground dark:text-white">
-                  Acesse gratuitamente.
-                </p>
-              </>
-            )) ||
+          <DialogDescription className="text-sm text-muted-foreground dark:text-white">
+            {(variant === "LOGIN" && <>Acesse gratuitamente.</>) ||
               (variant === "REGISTER" && (
                 <>
-                  <p className="text-sm text-muted-foreground dark:text-white">
-                    Cadastra-se em nossa plataforma gratuitamente e tenha acesso
-                    a diversos cursos.
-                  </p>
+                  Cadastra-se em nossa plataforma gratuitamente e tenha acesso a
+                  diversos cursos.
                 </>
               )) ||
               (variant === "VERIFICATION" && (
@@ -94,15 +89,15 @@ const ModalForm = () => {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-2 text-gray-500">
-                    Or continue with
+                  <span className="bg-white dark:bg-black px-2 text-gray-500">
+                    Ou continue com
                   </span>
                 </div>
               </div>
 
               <div className="mt-6 flex gap-2">
-                <SocialForm icon={BsGithub} onClick={() => "github"} />
-                <SocialForm icon={BsGoogle} onClick={() => "google"} />
+                <SocialForm icon={BsGithub} onClick={() => signIn("github")} />
+                <SocialForm icon={BsGoogle} onClick={() => signIn("google")} />
               </div>
             </div>
           )}
