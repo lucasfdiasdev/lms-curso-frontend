@@ -1,17 +1,18 @@
 "use client";
 
-import { useSelector } from "react-redux";
-
-import Heading from "@/utils/heading";
-import Protected from "@/hooks/Protected";
-import SidebarProfile from "@/components/profile/sidebar-profile";
-import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { useLogOutQuery } from "@/redux/features/auth/authApi";
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
-import ProfileInfo from "./profile-info";
-import ChangePassword from "./change-password";
+import { useSelector } from "react-redux";
+
+import { cn } from "@/lib/utils";
+import Heading from "@/utils/heading";
+import Protected from "@/hooks/Protected";
+import { useLogOutQuery } from "@/redux/features/auth/authApi";
+
+import ProfileInfo from "@/components/profile/profile-info";
+import SidebarProfile from "@/components/profile/sidebar-profile";
+import ChangePassword from "@/components/profile/change-password";
 
 const ProfilePage = () => {
   const [active, setActive] = useState(1);

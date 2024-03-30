@@ -5,9 +5,11 @@ import Image from "next/image";
 import { LogOut } from "lucide-react";
 import { BsLockFill } from "react-icons/bs";
 import { SiCoursera } from "react-icons/si";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
 
 import { cn } from "@/lib/utils";
 import PictureAvatar from "@/public/user.png";
+import Link from "next/link";
 
 interface ISidebarProfile {
   user: any;
@@ -39,8 +41,9 @@ const SidebarProfile: React.FC<ISidebarProfile> = ({
           alt={user.name}
           className="w-[20px] h-[20px] md:w-[30px] md:h-[30px] cursor-pointer rounded-full "
         />
-        <h5 className="pl-2 md:block hidden text-muted-foreground dark:text-white">
+        <h5 className="pl-2 md:flex items-center hidden text-muted-foreground dark:text-white">
           My Account
+          <span className="ml-2">{user.role}</span>
         </h5>
       </div>
       <div
@@ -67,10 +70,24 @@ const SidebarProfile: React.FC<ISidebarProfile> = ({
           Change Password
         </h5>
       </div>
+      {user.role === "admin" && (
+        <Link
+          className={cn(
+            `w-full flex items-center px-3 py-4 cursor-pointer`,
+            active === 4 ? "bg-slate-800" : "bg-transparent"
+          )}
+          href="/admin"
+        >
+          <MdOutlineAdminPanelSettings />
+          <h5 className="pl-2 md:block hidden text-muted-foreground dark:text-white">
+            Admin Dashboard
+          </h5>
+        </Link>
+      )}
       <div
         className={cn(
           `w-full flex items-center px-3 py-4 cursor-pointer`,
-          active === 4 ? "bg-slate-800" : "bg-transparent"
+          active === 5 ? "bg-slate-800" : "bg-transparent"
         )}
         onClick={() => logoutHandler()}
       >
