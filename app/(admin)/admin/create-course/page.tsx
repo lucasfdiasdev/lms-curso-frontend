@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import CourseInfo from "@/components/admin/create-courses/course-info";
+import CourseData from "@/components/admin/create-courses/course-data";
 import CourseOptions from "@/components/admin/create-courses/course-options";
 
 const CreateCoursesPage = () => {
@@ -43,6 +44,16 @@ const CreateCoursesPage = () => {
           <CourseInfo
             courseInfo={courseInfo}
             setCourseInfo={setCourseInfo}
+            active={active}
+            setActive={setActive}
+          />
+        )}
+        {active === 1 && (
+          <CourseData
+            benefits={benefits}
+            setBenefits={setBenefits}
+            prerequisites={prerequisites}
+            setPrerequisites={setPrerequisites}
             active={active}
             setActive={setActive}
           />
