@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import { NavItemsData } from "@/data/nav-data";

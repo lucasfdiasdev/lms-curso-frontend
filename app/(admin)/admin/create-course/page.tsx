@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 
-import CourseInfo from "@/components/admin/create-courses/course-info";
-import CourseData from "@/components/admin/create-courses/course-data";
-import CourseOptions from "@/components/admin/create-courses/course-options";
+import CourseInfo from "@/components/admin/create-course/course-info";
+import CourseData from "@/components/admin/create-course/course-data";
+import CourseContent from "@/components/admin/create-course/course-content";
+import CourseOptions from "@/components/admin/create-course/course-options";
 
 const CreateCoursesPage = () => {
   const [active, setActive] = useState(0);
@@ -37,6 +38,51 @@ const CreateCoursesPage = () => {
     },
   ]);
 
+  const handleSubmit = async () => {
+    // format benefits array
+    const formattedBenefits = benefits.map((benefit) => ({
+      title: benefit.title,
+    }));
+    // format prerequisites array
+    const formattedPrerequisites = prerequisites.map((prerequisites) => ({
+      title: prerequisites.title,
+    }));
+
+    // format course content array
+    const formattedCourseContentData = courseContentData.map(
+      (courseContent) => ({
+        videoUrl: courseContent.videoUrl,
+        title: courseContent.title,
+        description: courseContent.description,
+        videoSection: courseContent.videoSection,
+        links: courseContent.links.map((link) => ({
+          title: link.title,
+          url: link.url,
+        })),
+        suggestion: courseContent.suggestion,
+      })
+    );
+
+    const data = {
+      name: courseInfo.name,
+      description: courseInfo.description,
+      price: courseInfo.price,
+      estimatedPrice: courseInfo.estimatedPrice,
+      totalVideos: courseContentData.length,
+      tags: courseInfo.tags,
+      level: courseInfo.level,
+      demoUrl: courseInfo.demoUrl,
+      thumbnail: courseInfo.thumbnail,
+      benefits: formattedBenefits,
+      prerequisites: formattedPrerequisites,
+      courseContentData: formattedCourseContentData,
+    };
+
+    setCourseData(data);
+  };
+
+  console.log(courseData);
+
   return (
     <div className="w-full flex items-start">
       <div className="w-[80%]">
@@ -56,6 +102,15 @@ const CreateCoursesPage = () => {
             setPrerequisites={setPrerequisites}
             active={active}
             setActive={setActive}
+          />
+        )}
+        {active === 2 && (
+          <CourseContent
+            active={active}
+            setActive={setActive}
+            courseContentData={courseContentData}
+            setCourseContentData={setCourseContentData}
+            handleSubmit={handleSubmit}
           />
         )}
       </div>

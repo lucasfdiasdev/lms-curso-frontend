@@ -1,8 +1,11 @@
+"use client";
+
+import toast from "react-hot-toast";
+import { CircleMinus, CirclePlus } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CircleMinus, CirclePlus } from "lucide-react";
-import toast from "react-hot-toast";
 
 interface ICourseData {
   benefits: { title: string }[];
