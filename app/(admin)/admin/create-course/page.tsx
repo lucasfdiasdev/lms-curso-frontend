@@ -6,6 +6,7 @@ import CourseInfo from "@/components/admin/create-course/course-info";
 import CourseData from "@/components/admin/create-course/course-data";
 import CourseContent from "@/components/admin/create-course/course-content";
 import CourseOptions from "@/components/admin/create-course/course-options";
+import CoursePreview from "@/components/admin/create-course/course-preview";
 
 const CreateCoursesPage = () => {
   const [active, setActive] = useState(0);
@@ -81,7 +82,9 @@ const CreateCoursesPage = () => {
     setCourseData(data);
   };
 
-  console.log(courseData);
+  const handleCourseCreate = async (e: any) => {
+    const data = courseData;
+  };
 
   return (
     <div className="w-full flex items-start">
@@ -111,6 +114,15 @@ const CreateCoursesPage = () => {
             courseContentData={courseContentData}
             setCourseContentData={setCourseContentData}
             handleSubmit={handleSubmit}
+          />
+        )}
+
+        {active === 3 && (
+          <CoursePreview
+            active={active}
+            setActive={setActive}
+            courseData={courseData}
+            handleCourseCreate={handleCourseCreate}
           />
         )}
       </div>
